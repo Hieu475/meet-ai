@@ -1,52 +1,19 @@
-"use client";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
-import { useState } from "react";
-
-import {authClient} from "@/lib/auth-client";
-import { Button } from "../components/ui/button";
-import {Input} from "../components/ui/input";
 export default function Home() {
-  const { 
-        data: session, 
-    } = authClient.useSession() 
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-
-  const onLogin = () => {
-    authClient.signIn.email({
-      email,
-      password,
-    }, {
-      onError: () => {
-        window.alert("Something went wrong");
-      },
-      onSuccess: () => {
-        window.alert("Success");
-      }
-    }
-  
-  );
-  if (session){
-    return (
-      <div className="flex flex-col p-4 gap-y-4">
-        <p>
-          Logged in as {session.user.name}
-        </p>
-        <button onClick={() => authClient.signOut()}>
-          Sign out
-        </button>
-      </div>
-    )
-  }
-  }
   return (
-    <div className="flex flex-col gap-y-10">
-      <div className="p-4 flex flex-col gap-y-4">
-        <Input placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <Input placeholder="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <Button onClick = {onLogin}>Login</Button>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background gap-4">
+      <h1 className="text-4xl font-bold">Welcome to Meet AI</h1>
+      <p className="text-muted-foreground">The best place to meet your AI agents.</p>
+      <div className="flex gap-4">
+        <Button asChild>
+          <Link href="/sign-in">Sign In</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link href="/sign-up">Sign Up</Link>
+        </Button>
       </div>
     </div>
-  )
+  );
 }
